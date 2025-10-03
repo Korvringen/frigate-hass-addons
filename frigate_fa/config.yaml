@@ -3,6 +3,7 @@ version: 0.15.2-Korvringen
 slug: frigate_fa
 description: NVR with realtime local object detection for IP cameras
 url: https://github.com/blakeblackshear/frigate-hass-addons
+
 arch:
   - aarch64
   - amd64
@@ -11,14 +12,18 @@ arch:
 startup: services
 boot: auto
 ingress: false
-panel_icon: "mdi:cctv"
-panel_title: Frigate
 init: false
 
-# Lås till Frigate 0.15.2
+# Lås add-onen till Frigate 0.15.2
 image: ghcr.io/blakeblackshear/frigate:0.15.2
 
-# Nödvändiga rättigheter/monteringar för "Full Access"
+# UI
+panel_icon: "mdi:cctv"
+panel_title: Frigate
+webui: "http://[HOST]:[PORT:5000]/"
+watchdog: "http://[HOST]:[PORT:5000]/"
+
+# Full Access-rättigheter & mounts
 full_access: true
 privileged:
   - NET_ADMIN
@@ -37,7 +42,7 @@ devices:
   - /dev/dri:/dev/dri
   - /dev/bus/usb:/dev/bus/usb
 
-# Exponerade portar (UI + WebRTC)
+# Exponerade portar
 ports:
   5000/tcp: 5000
   8555/tcp: 8555
@@ -47,8 +52,5 @@ ports_description:
   8555/tcp: WebRTC over TCP
   8555/udp: WebRTC over UDP
 
-# (behövs för att Add-on UI:t ska ladda)
 options: {}
 schema: {}
-webui: "http://[HOST]:[PORT:5000]/"
-watchdog: "http://[HOST]:[PORT:5000]/"
